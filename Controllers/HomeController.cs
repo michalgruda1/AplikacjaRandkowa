@@ -10,6 +10,9 @@ namespace AplikacjaRandkowa.Controllers
 {
 	public class HomeController : Controller
 	{
+		[BindProperty(SupportsGet = false)]
+		public WizardViewModel Wizard { get; set; }
+
 		public IActionResult Index()
 		{
 			return View();
@@ -25,7 +28,7 @@ namespace AplikacjaRandkowa.Controllers
 		public IActionResult Krok1Get()
 		{
 			// GET
-			// inicjalizuj WizardViewModel, a w środku nullable: KobietaViewModel, MezczyznaViewModel, DopasowanieViewModel (każdy sub-model ma mocną walidację)
+			// inicjalizuj WizardViewModel, a w środku nullable view modele: KobietaViewModel, MezczyznaViewModel (każdy sub-model ma mocną walidację)
 			// wyswietl formularz z KobietaViewModel
 			return View();
 		}
@@ -41,7 +44,7 @@ namespace AplikacjaRandkowa.Controllers
 			// poprawny - idz dalej
 			// zapisz tresc KobietaViewModel w Wizard.KobietaViewModel
 			// przejdz do kroku Mezczyzna, przekazujac WizardViewModel do widoku
-			return View(nameof(Krok2Post_ShowView), WizardViewModel);
+			return View(nameof(Krok2Post_ShowView));
 		}
 
 		[AutoValidateAntiforgeryToken]
@@ -50,6 +53,7 @@ namespace AplikacjaRandkowa.Controllers
 		{
 			// GET
 			// Wyświetl, że to krok 2, i trzeba zacząć od kroku 1 (link do action Krok1Get)
+			return View();
 		}
 
 		[AutoValidateAntiforgeryToken]
@@ -65,6 +69,7 @@ namespace AplikacjaRandkowa.Controllers
 			//		- zdajemy się na wstecz przeglądarki, bo wstecz przyjdzie GET-em i nie będzie danych POST do bindowania
 			// Wyświetl formularz MezczyznaViewModel z ukrytym polem ze WizardViewModel z danymi KobietaViewModel
 			// Submit wywołuje POST-em Krok2Post
+			return View();
 		}
 
 		[AutoValidateAntiforgeryToken]
@@ -81,6 +86,7 @@ namespace AplikacjaRandkowa.Controllers
 			// Zweryfikuj poprawnosc MezczyznaViewModel
 			// niepoprawny - cofnij POST-em do Krok2Post_ShowView, przekazujac zserializowany WizardViewModel
 			// poprawny - wyswietl krok 3
+			return View();
 		}
 
 		[AutoValidateAntiforgeryToken]
@@ -93,6 +99,7 @@ namespace AplikacjaRandkowa.Controllers
 			// Zamapuj na pełny obiekt DopasowanieModel z KobietaModel i MezczyznaModel
 			// wykonaj metodę sprawdzającą dopasowanie na DopasowanieModel
 			// wyświetl widok w zależności od wyniku dopasowania
+			return View();
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
