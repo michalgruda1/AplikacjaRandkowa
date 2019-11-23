@@ -3,16 +3,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AplikacjaRandkowa.Models
 {
-	[Serializable]
-	public class MezczyznaViewModel
+	public class MezczyznaViewModel : IPerson
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Imię jest wymagane")]
 		[Display(Name = "Imię"), DataType(DataType.Text), MaxLength(50, ErrorMessage = "Imię za długie"), MinLength(1, ErrorMessage = "Imię za krótkie")]
 		public string Imie { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Nazwisko jest wymagane")]
-		[DataType(DataType.Text), MaxLength(50, ErrorMessage = "Nazwisko za długie"), MinLength(1, ErrorMessage = "Nazwisko za krótkie")]
-		public string Nazwisko { get; set; }
+		[Required(ErrorMessage = "Wzrost jest wymagany")]
+		[Display(Name = "Wzrost [cm]"), Range(typeof(int), "50", "250", ErrorMessage = "Wzrost musi być między {1} i {2} cm")]
+		public int Wzrost { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Data urodzenia jest wymagana")]
 		[Display(Name = "Data urodzenia"), DataType(DataType.Date)]
