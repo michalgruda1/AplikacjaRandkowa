@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace AplikacjaRandkowa.Models
 {
+	[Serializable]
 	public class WizardViewModel
 	{
-		public KobietaViewModel Kobieta { get; set; }
+		public MezczyznaViewModel Kobieta { get; set; }
 		public MezczyznaViewModel Mezczyzna { get; set; }
 	}
 }

@@ -1,0 +1,50 @@
+﻿@model AplikacjaRandkowa.Models.WizardViewModel
+
+@{
+	ViewData["Title"] = "Mężczyzna";
+}
+
+<h1>Krok 2. Dane mężczyzny</h1>
+
+<h4>Podaj dane mężczyzny, by sprawdzić, czy pasuje do niej kobieta</h4>
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Krok2Post_ShowView">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Mezczyzna.Imie" class="control-label"></label>
+				<input asp-for="Mezczyzna.Imie" class="form-control" />
+				<span asp-validation-for="Mezczyzna.Imie" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Mezczyzna.Nazwisko" class="control-label"></label>
+				<input asp-for="Mezczyzna.Nazwisko" class="form-control" />
+				<span asp-validation-for="Mezczyzna.Nazwisko" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Mezczyzna.DataUrodzenia" class="control-label"></label>
+				<input asp-for="Mezczyzna.DataUrodzenia" class="form-control" />
+				<span asp-validation-for="Mezczyzna.DataUrodzenia" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Mezczyzna.KolorOczu" class="control-label"></label>
+				<select asp-for="Mezczyzna.KolorOczu" asp-items="Html.GetEnumSelectList<KolorOczuEnum>()" class="form-control">
+					<option>Wybierz kolor...</option>
+				</select>
+				<span asp-validation-for="Mezczyzna.KolorOczu" class="text-danger"></span>
+			</div>
+			<input type="hidden" asp-for="Kobieta" value="@Json.Serialize(Model.Kobieta)">
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
