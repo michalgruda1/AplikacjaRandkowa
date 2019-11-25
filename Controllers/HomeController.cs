@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AplikacjaRandkowa.Models;
+using AplikacjaRandkowa.Services;
 using Microsoft.AspNetCore.Mvc;
-using AplikacjaRandkowa.Models;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace AplikacjaRandkowa.Controllers
 {
@@ -13,6 +10,15 @@ namespace AplikacjaRandkowa.Controllers
 	{
 		[BindProperty]
 		public WizardViewModel Wizard { get; set; }
+
+		private readonly ICriteriaBuilder criteriaBuilder;
+		private readonly IMatchGovernor matchGovernor;
+
+		public HomeController (ICriteriaBuilder criteriaBuilder, IMatchGovernor matchGovernor)
+		{
+			this.criteriaBuilder = criteriaBuilder;
+			this.matchGovernor = matchGovernor;
+		}
 
 		public IActionResult Index()
 		{
@@ -55,11 +61,17 @@ namespace AplikacjaRandkowa.Controllers
 		[HttpPost]
 		public IActionResult Krok2Post([FromForm] string Kobieta)
 		{
-			if (!ModelState.IsValid || string.IsNullOrEmpty(Kobieta)) return RedirectToAction(nameof(Krok1Get));
+			if (!ModelState.IsValid) return RedirectToAction(nameof(Krok1Get));
+			
+			var kobietaVM = JsonConvert.DeserializeObject<KobietaViewModel>(Kobieta);
 
-			Wizard.Kobieta = JsonConvert.DeserializeObject<KobietaViewModel>(Kobieta);
-			return View("Dopasowanie", Wizard);
+			if (!TryValidateModel(kobietaVM, nameof(Wizard.Kobieta))) return RedirectToAction(nameof(Krok1Get));
 
+			Wizard.Kobieta = kobietaVM;
+
+			MatchModel dopasowanie = new MatchModel(matchGovernor, Wizard.Kobieta, Wizard.Mezczyzna);
+
+			return View("~/Views/Randka/Dopasowanie.cshtml", dopasowanie);
 		}
 
 		[AutoValidateAntiforgeryToken]

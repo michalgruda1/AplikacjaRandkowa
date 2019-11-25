@@ -18,7 +18,8 @@ namespace AplikacjaRandkowa.Services
 
 			int count = 0;
 
-			criteria.ToList().ForEach(c =>
+			criteria.ToList()
+				.ForEach(c =>
 				{
 					if (c.Invoke(personOne, personTwo) == true)
 					{
