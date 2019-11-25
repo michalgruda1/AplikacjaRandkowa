@@ -3,9 +3,9 @@
     ViewData["Title"] = "Dopasowanie";
 }
 
-<h1>Dopasowanie między</h1>
+<h4>@Model.GetPersonOne().Imie</h4>
+<h4>oraz</h4>
+<h4>@Model.GetPersonTwo().Imie</h4>
 
-<h4>@Model.GetPersonOne().Imie oraz @Model.GetPersonTwo().Imie</h4>
-
-<h3>@Model.IsMatch()</h3>
+<h3>@(Model.IsMatch() == true ? "pasują do siebie" : "Nie pasują do siebie")</h3>
 
