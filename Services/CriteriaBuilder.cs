@@ -6,7 +6,7 @@ namespace AplikacjaRandkowa.Models
 {
 	public class CriteriaBuilder : ICriteriaBuilder
 	{
-		private IList<Func<IPerson, IPerson, bool>> Criteria { get; set; }
+		private IList<Func<IPerson, IPerson, bool>> Criteria { get; set; } = new List<Func<IPerson, IPerson, bool>>();
 
 		public IList<Func<IPerson, IPerson, bool>> GetCriteria()
 		{
