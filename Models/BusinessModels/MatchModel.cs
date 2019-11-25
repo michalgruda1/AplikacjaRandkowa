@@ -1,4 +1,5 @@
 ﻿using AplikacjaRandkowa.Services;
+using System;
 
 namespace AplikacjaRandkowa.Models
 {
@@ -10,6 +11,8 @@ namespace AplikacjaRandkowa.Models
 
 		public MatchModel(IMatchGovernor matchGovernor, IPerson personOne, IPerson personTwo)
 		{
+			if (matchGovernor == null || personOne == null || personTwo == null) throw new ArgumentNullException();
+
 			this.matchGovernor = matchGovernor;
 			this.personOne = personOne;
 			this.personTwo = personTwo;
