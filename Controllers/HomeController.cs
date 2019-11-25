@@ -25,50 +25,53 @@ namespace AplikacjaRandkowa.Controllers
 			return View();
 		}
 
-		public IActionResult Privacy()
-		{
-			return View();
-		}
-
 		[AutoValidateAntiforgeryToken]
 		[HttpGet]
 		public IActionResult Krok1Get()
 		{
 			Wizard = new WizardViewModel() { Kobieta = null, Mezczyzna = null };
-			return View("~/Views/Randka/Kobieta.cshtml", Wizard);
+			return View("Kobieta", Wizard);
 		}
 
 		[AutoValidateAntiforgeryToken]
 		[HttpPost]
 		public IActionResult Krok1Post()
 		{
-			if (!ModelState.IsValid) return View("~/Views/Randka/Kobieta.cshtml", Wizard);
+			if (!ModelState.IsValid) return View("Kobieta", Wizard);
 
-			return View("~/Views/Randka/Mezczyzna.cshtml", Wizard);
+			return View("Mezczyzna", Wizard);
 		}
 
 		[AutoValidateAntiforgeryToken]
 		[HttpGet]
 		public IActionResult Krok2Get()
 		{
-			return View("~/Views/Randka/MezczyznaGet.cshtml");
+			return View("MezczyznaGet");
 		}
 
 		[AutoValidateAntiforgeryToken]
 		[HttpPost]
 		public IActionResult Krok2Post([FromForm] string Kobieta)
 		{
-			// walidacja danych mężczyzny
-			if (!ModelState.IsValid) return RedirectToAction(nameof(Krok1Get));
-			
-			// re-walidacja danych kobiety
-			var kobietaVM = JsonConvert.DeserializeObject<KobietaViewModel>(Kobieta);
-			if (!TryValidateModel(kobietaVM, nameof(Wizard.Kobieta))) return RedirectToAction(nameof(Krok1Get));
+			if (!ModelState.IsValid) return View("Mezczyzna", Wizard);
+
+			// pobranie i deserializacja danych kobiety i re-walidacja danych
+			KobietaViewModel kobietaVM = null;
+			try
+			{
+				kobietaVM = JsonConvert.DeserializeObject<KobietaViewModel>(Kobieta);
+			}
+			catch
+			{
+				RedirectToAction(nameof(Krok1Get));
+			}
 			Wizard.Kobieta = kobietaVM;
+			ModelState.Clear();
+			if (!TryValidateModel(Wizard)) return View("Kobieta", Wizard);
 
 			// stworzenie i przekazanie modelu dopasowania dla kobiety i mężczyzny
 			MatchModel dopasowanie = new MatchModel(matchGovernor, Wizard.Kobieta, Wizard.Mezczyzna);
-			return View("~/Views/Randka/Dopasowanie.cshtml", dopasowanie);
+			return View("Dopasowanie", dopasowanie);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

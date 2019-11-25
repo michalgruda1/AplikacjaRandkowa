@@ -1,0 +1,12 @@
+﻿@model  AplikacjaRandkowa.Models.MatchModel
+@{
+    ViewData["Title"] = "Dopasowanie";
+}
+<h1>Krok 3. Wynik</h1>
+<div class="col-md-12">
+    <h4 class="text-center">@Model.GetPersonOne().Imie</h4>
+    <h6 class="text-center">i</h6>
+    <h4 class="text-center">@Model.GetPersonTwo().Imie</h4>
+    <h2 class="text-center">@(Model.IsMatch() == true ? "Pasują do siebie :)" : "Nie pasują do siebie :(")</h2>
+</div>
+

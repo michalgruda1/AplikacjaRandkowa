@@ -5,21 +5,21 @@ namespace AplikacjaRandkowa.Models
 {
 	public class KobietaViewModel: IPerson
 	{
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Imię jest wymagane")]
-		[Display(Name = "Imię"), DataType(DataType.Text), MaxLength(50, ErrorMessage = "Imię za długie"), MinLength(1, ErrorMessage = "Imię za krótkie")]
+		[Required(AllowEmptyStrings = false, ErrorMessage = "{0} jest wymagane")]
+		[Display(Name = "Imię"), DataType(DataType.Text), MaxLength(50, ErrorMessage = "{0} za długie"), MinLength(1, ErrorMessage = "{0} za krótkie")]
 		public string Imie { get; set; }
 
 		[Required(ErrorMessage = "Wzrost jest wymagany")]
 		[Display(Name = "Wzrost [cm]"), Range(typeof(int), "50", "250", ErrorMessage = "Wzrost musi być między {1} i {2} cm")]
 		public int Wzrost { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Data urodzenia jest wymagana")]
-		[Display(Name ="Data urodzenia"), DataType(DataType.Date)]
+		[Required(AllowEmptyStrings = false, ErrorMessage = "{0} jest wymagana")]
+		[Display(Name = "Data urodzenia"), DataType(DataType.Date)]
 		public DateTime DataUrodzenia { get; set; }
 
-		[Required]
+		[Required(ErrorMessage = "{0} jest wymagany")]
 		[Display(Name = "Kolor oczu")]
-		[EnumDataType(typeof(KolorOczuEnum), ErrorMessage = "Nie znamy takiego koloru")]
+		[EnumDataType(typeof(KolorOczuEnum), ErrorMessage = "{0} nieznany")]
 		public KolorOczuEnum KolorOczu { get; set; }
 	}
 }
