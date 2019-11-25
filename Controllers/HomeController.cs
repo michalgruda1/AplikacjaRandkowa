@@ -58,12 +58,15 @@ namespace AplikacjaRandkowa.Controllers
 		[HttpPost]
 		public IActionResult Krok2Post([FromForm] string Kobieta)
 		{
+			// walidacja danych mężczyzny
 			if (!ModelState.IsValid) return RedirectToAction(nameof(Krok1Get));
 			
+			// re-walidacja danych kobiety
 			var kobietaVM = JsonConvert.DeserializeObject<KobietaViewModel>(Kobieta);
 			if (!TryValidateModel(kobietaVM, nameof(Wizard.Kobieta))) return RedirectToAction(nameof(Krok1Get));
-
 			Wizard.Kobieta = kobietaVM;
+
+			// stworzenie i przekazanie modelu dopasowania dla kobiety i mężczyzny
 			MatchModel dopasowanie = new MatchModel(matchGovernor, Wizard.Kobieta, Wizard.Mezczyzna);
 			return View("~/Views/Randka/Dopasowanie.cshtml", dopasowanie);
 		}
