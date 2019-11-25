@@ -34,10 +34,7 @@ namespace AplikacjaRandkowa.Controllers
 		[HttpGet]
 		public IActionResult Krok1Get()
 		{
-			// inicjalizuj WizardViewModel, a w środku nullable view modele: KobietaViewModel, MezczyznaViewModel (każdy sub-model ma mocną walidację)
 			Wizard = new WizardViewModel() { Kobieta = null, Mezczyzna = null };
-
-			// wyswietl formularz z KobietaViewModel
 			return View("~/Views/Randka/Kobieta.cshtml", Wizard);
 		}
 
@@ -64,38 +61,11 @@ namespace AplikacjaRandkowa.Controllers
 			if (!ModelState.IsValid) return RedirectToAction(nameof(Krok1Get));
 			
 			var kobietaVM = JsonConvert.DeserializeObject<KobietaViewModel>(Kobieta);
-
 			if (!TryValidateModel(kobietaVM, nameof(Wizard.Kobieta))) return RedirectToAction(nameof(Krok1Get));
 
 			Wizard.Kobieta = kobietaVM;
-
 			MatchModel dopasowanie = new MatchModel(matchGovernor, Wizard.Kobieta, Wizard.Mezczyzna);
-
 			return View("~/Views/Randka/Dopasowanie.cshtml", dopasowanie);
-		}
-
-		[AutoValidateAntiforgeryToken]
-		[HttpPost]
-		public IActionResult Krok3Post()
-		{
-			// POST
-			// Sprawdź, czy istnieje WizardViewModel z KobietaViewModel w danych formularza via binding
-			// jeśli nie - przekieruj na krok 1
-			// Sprawdz czy jest poprawny
-			// jeśli nie - przekieruj na krok 1
-			// Sprawdź, czy podano w formularzu WizardViewModel z MezczyznaViewModel via binding
-			// Odczytaj MezczyznaViewModel via binding
-			// Zweryfikuj poprawnosc MezczyznaViewModel
-			// niepoprawny - cofnij POST-em do Krok2Post_ShowView, przekazujac zserializowany WizardViewModel
-			// poprawny - wyswietl krok 3
-
-
-			// Sprawdź, czy istnieje WizardViewModel z KobietaViewModel, MezczyznaViewModel w danych formularza via binding
-			// Sprawdź czy są valid
-			// Zamapuj na pełny obiekt DopasowanieModel z KobietaModel i MezczyznaModel
-			// wykonaj metodę sprawdzającą dopasowanie na DopasowanieModel
-			// wyświetl widok w zależności od wyniku dopasowania
-			return View();
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
