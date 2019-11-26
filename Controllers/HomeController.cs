@@ -20,12 +20,6 @@ namespace AplikacjaRandkowa.Controllers
 			this.matchGovernor = matchGovernor;
 		}
 
-		public IActionResult Index()
-		{
-			return View();
-		}
-
-		[AutoValidateAntiforgeryToken]
 		[HttpGet]
 		public IActionResult Krok1Get()
 		{
@@ -42,12 +36,6 @@ namespace AplikacjaRandkowa.Controllers
 			return View("Mezczyzna", Wizard);
 		}
 
-		[AutoValidateAntiforgeryToken]
-		[HttpGet]
-		public IActionResult Krok2Get()
-		{
-			return View("MezczyznaGet");
-		}
 
 		[AutoValidateAntiforgeryToken]
 		[HttpPost]
@@ -56,10 +44,10 @@ namespace AplikacjaRandkowa.Controllers
 			if (!ModelState.IsValid) return View("Mezczyzna", Wizard);
 
 			// pobranie i deserializacja danych kobiety i re-walidacja danych
-			KobietaViewModel kobietaVM = null;
+			Person kobietaVM = null;
 			try
 			{
-				kobietaVM = JsonConvert.DeserializeObject<KobietaViewModel>(Kobieta);
+				kobietaVM = JsonConvert.DeserializeObject<Person>(Kobieta);
 			}
 			catch
 			{
