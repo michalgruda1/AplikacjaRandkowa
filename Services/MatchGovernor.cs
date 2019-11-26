@@ -29,16 +29,7 @@ namespace AplikacjaRandkowa.Services
 				}
 			);
 
-			if (count > 2)
-			{
-				// pasują do siebie
-				return true;
-			}
-			else
-			{
-				// nie pasują 
-				return false;
-			}
+			return count >= 2 ? true : false;
 		}
 	}
 }
