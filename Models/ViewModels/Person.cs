@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AplikacjaRandkowa.Models
 {
-	public class KobietaViewModel: IPerson
+	public class Person: IPerson
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "{0} jest wymagane")]
 		[Display(Name = "Imię"), DataType(DataType.Text), MaxLength(50, ErrorMessage = "{0} za długie"), MinLength(1, ErrorMessage = "{0} za krótkie")]

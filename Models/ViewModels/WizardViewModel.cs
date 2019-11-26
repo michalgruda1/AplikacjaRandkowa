@@ -2,7 +2,7 @@
 {
 	public class WizardViewModel
 	{
-		public KobietaViewModel Kobieta { get; set; }
-		public MezczyznaViewModel Mezczyzna { get; set; }
+		public Person Kobieta { get; set; }
+		public Person Mezczyzna { get; set; }
 	}
 }
